@@ -1,0 +1,104 @@
+@font-face {
+   font-family: Pacifico;
+   font-style: normal;
+   font-weight: normal;
+   src: url(../Fonts/Pacifico.ttf);
+}
+
+@font-face {
+   font-family: Lato;
+   font-style: normal;
+   font-weight: normal;
+   src: url(../Fonts/Lato-Regular.ttf);
+}
+
+body{
+	font-family: 'Lato';
+}
+
+img{
+	width:100%;
+	border-radius: 5px;
+}
+
+h1,h2{
+	font-family: 'Pacifico', cursive;
+}
+
+a,.azul{
+	color: #009FFF;
+	font-size: 18 px;
+}
+
+.quitar-float{
+	float: none;
+}
+
+.espacio-arriba{
+	margin-top: 50px;
+}
+
+.verde{
+	color: #00887C;
+}
+
+.Pacifico{
+	font-family: "Pacifico";
+}
+
+.grande{
+	font-size: 40px;
+}
+
+.espacio-derecha{
+	margin-right: 1em;
+}
+
+.no-lista{
+	margin: 0;
+	padding: 0;
+}
+
+.no-lista li{
+	list-style: none;
+}
+
+.se-gris{
+	background-color: #eee;
+}
+
+.padding-largo{
+	padding: 5px 10px;
+}
+
+.inline-block{
+	float: none;
+	display: inline-block;
+	margin-left: -4px;
+}
+
+.vete-arriba{
+	vertical-align: top;
+}
+
+.mediano{
+	font-size: 1.5em;
+}
+
+.retraso-1{
+	-webkit-animation-delay: 0.5s;
+	-o-animation-delay: 0.5s;
+	animation-delay: 0.5s;
+}
+
+.retraso-2{
+	-webkit-animation-delay: 1s;
+	-o-animation-delay: 1s;
+	animation-delay: 1s;
+}
+
+.retraso-3{
+	-webkit-animation-delay: 2s;
+	-o-animation-delay: 2s;
+	animation-delay: 2s;
+}

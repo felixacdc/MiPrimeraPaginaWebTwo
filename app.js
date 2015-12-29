@@ -7,6 +7,10 @@ var app = express();
 // definir el motor de vistas para la aplicacion
 app.set("view engine", "jade");
 
+// para servir imagenes, css y js se utiliza una carpeta estatica o assets
+// el nombre de la carpeta es opcional y dentro de ella iran todos los css, js, imagenes, etc.
+app.use(express.static("public"));
+
 // le decimos a express que vamos a recivir peticiones en esta URL /
 // aceptamos la peticion por medio de metodo GET
 // req: es el request(peticion o solicitud) del usuario, este request trae informacion como

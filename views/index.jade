@@ -1,6 +1,20 @@
 doctype html
 html(lang="en")
   head
-    title Primera Pagina Web
+    title My Favorite Place To Eat
+    meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet" href="Css/bootstrap.css")
+    link(rel="stylesheet" href="Css/main.css")
+    link(rel="stylesheet" href="Css/animate.css")
   body
-    h1 Hola Mundo
+      div(class="col-md-3 center-block quitar-float text-center espacio-arriba")
+          img(src="imgs/Traduction.png" alt="no se pudo cargar la imagen" class="animated fadeIn")
+          h1(class="verde grande animated fadeIn retraso-1") Restaurant
+          
+          div(class="animated fadeInDown retraso-2")
+              h2 Come, Eat And Have Fun
+              nav
+                  a(href="Menu.html" class="espacio-derecha") Menu
+                  a(href="Contacto.html" class="espacio-derecha") Contact
+                  a(href="#") About
