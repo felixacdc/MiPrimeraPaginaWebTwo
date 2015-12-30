@@ -1,23 +1,29 @@
 var express = require('express');
 // agregar mongoose
 var mongoose = require('mongoose');
+// incluir el body parser sirve para poder visualizar en consola los datos mandados por post o parsearlos
+var bodyParser = require('body-parser');
 
 // conexcion a la db
-//mongoose.connect('mongodb://localhost/primera_pagina');
+mongoose.connect('mongodb://localhost/primera_pagina');
 //Definir el schema de nuestros productos equivale a crear un atabla
-// var productShema = {
-//     title:String,
-//     description:String,
-//     imageUrl: String,
-//     pricing: Number
-// };
+var productShema = {
+    title:String,
+    description:String,
+    imageUrl: String,
+    pricing: Number
+};
 
 // crear un modelo, que define el nombre y la estructura del objeto (tabla)
-// var Product = mongoose.model("Product", productShema);
+var Product = mongoose.model("Product", productShema);
 
 // instanciar un objeto express, este contine los metodos necesarios para hacer
 // funcionar nuestra aplicacion
 var app = express();
+
+// usar body parser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 // definir el motor de vistas para la aplicacion
 app.set("view engine", "jade");
@@ -58,5 +64,29 @@ app.get("/menu/new", function(request, response){
     response.render("menu/new");
 });
 
+// definir la ruta Post para registrar los productos
+app.post("/menu",function(request, response){
+
+    if (request.body.password == "123456") {
+
+        var data = {
+            title: request.body.title,
+            description: request.body.description,
+            imageUrl: "burger.png",
+            pricing: request.body.pricing
+        };
+
+        var product= new Product(data);
+
+        product.save(function(err){
+            console.log(product);
+            response.render("index");
+        });
+
+    }else{
+        response.render("menu/new");
+    }
+
+});
 // puerto en el que la aplicacion va a estar escuchando
 app.listen(8080);
