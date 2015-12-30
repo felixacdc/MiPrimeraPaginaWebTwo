@@ -3,17 +3,17 @@ var express = require('express');
 var mongoose = require('mongoose');
 
 // conexcion a la db
-mongoose.connect('mongodb://localhost/primera_pagina');
+//mongoose.connect('mongodb://localhost/primera_pagina');
 //Definir el schema de nuestros productos equivale a crear un atabla
-var productShema = {
-    title:String,
-    description:String,
-    imageUrl: String,
-    pricing: Number
-};
+// var productShema = {
+//     title:String,
+//     description:String,
+//     imageUrl: String,
+//     pricing: Number
+// };
 
 // crear un modelo, que define el nombre y la estructura del objeto (tabla)
-var Product = mongoose.model("Product", productShema);
+// var Product = mongoose.model("Product", productShema);
 
 // instanciar un objeto express, este contine los metodos necesarios para hacer
 // funcionar nuestra aplicacion
@@ -51,6 +51,11 @@ app.get("/", function(req, res) {
     res.render("index");
     // end finaliza la peticion
     // res.end("Hola Mundo");
+});
+
+// definir la ruta atravez de la cual se van a crear los productos
+app.get("/menu/new", function(request, response){
+    response.render("menu/new");
 });
 
 // puerto en el que la aplicacion va a estar escuchando
