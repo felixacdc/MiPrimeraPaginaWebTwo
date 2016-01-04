@@ -3,9 +3,29 @@ var express = require('express');
 var mongoose = require('mongoose');
 // incluir el body parser sirve para poder visualizar en consola los datos mandados por post o parsearlos
 var bodyParser = require('body-parser');
+// agregar plugin multer
+var multer = require('multer');
+// agregar la libreria cloudinary
+var cloudinary = require('cloudinary');
 
+cloudinary.config({
+    cloud_name: "dmz1y7lws",
+    api_key: "585322687335557",
+    api_secret: "T64PbqUZsEAJFdECWZ_vV9EOUZE"
+});
+
+// instanciar un objeto express, este contine los metodos necesarios para hacer
+// funcionar nuestra aplicacion
+var app = express();
 // conexcion a la db
 mongoose.connect('mongodb://localhost/primera_pagina');
+
+// usar body parser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+// indica a node de utilice multer el parametro dest indica el destino donde se guardaran las imagenes
+app.use(multer({ dest: 'uploads/'}).single('avatar'));
+
 //Definir el schema de nuestros productos equivale a crear un atabla
 var productShema = {
     title:String,
@@ -17,13 +37,7 @@ var productShema = {
 // crear un modelo, que define el nombre y la estructura del objeto (tabla)
 var Product = mongoose.model("Product", productShema);
 
-// instanciar un objeto express, este contine los metodos necesarios para hacer
-// funcionar nuestra aplicacion
-var app = express();
 
-// usar body parser
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
 
 // definir el motor de vistas para la aplicacion
 app.set("view engine", "jade");
@@ -65,7 +79,7 @@ app.get("/menu/new", function(request, response){
 });
 
 // definir la ruta Post para registrar los productos
-app.post("/menu",function(request, response){
+app.post("/menu", function(request, response){
 
     if (request.body.password == "123456") {
 
@@ -78,10 +92,19 @@ app.post("/menu",function(request, response){
 
         var product= new Product(data);
 
-        product.save(function(err){
+        cloudinary.uploader.upload(request.file.path,
+                                    function(result) {
+                                        product.imageUrl = result.url;
+                                        product.save(function(err){
+                                            console.log(product);
+                                            response.render("index");
+                                        });
+                                    }
+                                );
+        /*product.save(function(err){
             console.log(product);
             response.render("index");
-        });
+        });*/
 
     }else{
         response.render("menu/new");
