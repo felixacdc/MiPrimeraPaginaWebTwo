@@ -78,6 +78,18 @@ app.get("/menu/new", function(request, response){
     response.render("menu/new");
 });
 
+// Ruta para el menu
+app.get("/menu", function (request, response){
+    Product.find(function (error, documents) {
+
+        if (error) {
+            console.log(error);
+        }
+        // se abre la vista y se pasan los valores obtenidos de la DB
+        response.render("menu/index", { products: documents });
+    });
+});
+
 // definir la ruta Post para registrar los productos
 app.post("/menu", function(request, response){
 

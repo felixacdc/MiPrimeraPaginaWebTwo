@@ -1,0 +1,13 @@
+extends ../layout.jade
+block contenido
+    div(class="text-center mediano")
+        h2(class="grande azul animated bounceInDown") Menu
+        p(class="animated bounceInDown retraso-1") All products are prepared with quality procedure.
+        each product in products
+            div(class="col-md-3 col-sm-4 inline-block")
+                article(class="animated zoomInDown retraso-2")
+                    h3= product.title
+                    img(class="col-md-5 col-xs-4 quitar-float" src="#{ product.imageUrl }")
+                    p 
+                        strong= product.pricing
+                        
