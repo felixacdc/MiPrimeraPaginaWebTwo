@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var multer = require('multer');
 // agregar la libreria cloudinary
 var cloudinary = require('cloudinary');
+var app_password = "123456";
 
 cloudinary.config({
     cloud_name: "dmz1y7lws",
@@ -90,10 +91,30 @@ app.get("/menu", function (request, response){
     });
 });
 
+// ruta para la vista del admin
+app.get('/admin', function (request, response) {
+    response.render('admin/form');
+});
+
+app.post('/admin', function (request, response) {
+    if (request.body.password == app_password) {
+        Product.find(function (error, documents) {
+
+            if (error) {
+                console.log(error);
+            }
+            // se abre la vista y se pasan los valores obtenidos de la DB
+            response.render("admin/index", { products: documents });
+        });
+    }else {
+        response.redirect("/");
+    }
+});
+
 // definir la ruta Post para registrar los productos
 app.post("/menu", function(request, response){
 
-    if (request.body.password == "123456") {
+    if (request.body.password == app_password) {
 
         var data = {
             title: request.body.title,
