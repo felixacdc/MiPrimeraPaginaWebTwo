@@ -7,7 +7,9 @@ var bodyParser = require('body-parser');
 var multer = require('multer');
 // agregar la libreria cloudinary
 var cloudinary = require('cloudinary');
+var method_override = require("method-override");
 var app_password = "123456";
+
 
 cloudinary.config({
     cloud_name: "dmz1y7lws",
@@ -26,6 +28,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 // indica a node de utilice multer el parametro dest indica el destino donde se guardaran las imagenes
 app.use(multer({ dest: 'uploads/'}).single('avatar'));
+app.use(method_override("_method"));
 
 //Definir el schema de nuestros productos equivale a crear un atabla
 var productShema = {
@@ -91,6 +94,33 @@ app.get("/menu", function (request, response){
     });
 });
 
+// url de Editar
+app.get("/menu/edit/:id", function(request, response) {
+    var id_producto = request.params.id;
+
+    Product.findOne({"_id": id_producto}, function(error, documents){
+        console.log(documents);
+        response.render("menu/edit", {product: documents});
+    });
+
+});
+
+app.put("/menu/:id", function(request, response) {
+    if (request.body.password == app_password) {
+        var data = {
+            title: request.body.title,
+            description: request.body.description,
+            pricing: request.body.pricing
+        };
+
+        Product.update({"_id": request.params.id}, data, function(product){
+            response.redirect("/menu");
+        });
+    }else {
+        response.redirect("/");
+    }
+});
+
 // ruta para la vista del admin
 app.get('/admin', function (request, response) {
     response.render('admin/form');
@@ -110,6 +140,8 @@ app.post('/admin', function (request, response) {
         response.redirect("/");
     }
 });
+
+
 
 // definir la ruta Post para registrar los productos
 app.post("/menu", function(request, response){
