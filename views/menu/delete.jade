@@ -1,0 +1,10 @@
+extends ../layout.jade
+block contenido
+    div(class="col-md-5 center-block quitar-float top-space text-left")
+        h1(style="text-align:center;") Eliminar Producto #[span= product.title] 
+        form(method="POST" action="/menu/#{product.id}?_method=delete" style="margin-top:3em;")
+            div(class="form-group")
+                label Contraseña
+                input(type="password" name="password" placeholder="Contraseña del Producto" class="form-control")
+            div(class="form-group")
+                input(type="submit" class="btn btn-info" value="Eliminar")

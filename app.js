@@ -176,5 +176,33 @@ app.post("/menu", function(request, response){
     }
 
 });
+
+app.get("/menu/delete/:id", function (request, response) {
+  var id = request.params.id;
+
+  Product.findOne( {"_id": id}, function (error, product) {
+      response.render("menu/delete", {product: product});
+  });
+
+});
+
+app.delete("/menu/:id", function (request, response) {
+
+  if (request.body.password == app_password) {
+    var id = request.params.id;
+
+    Product.remove({"_id": id}, function (error) {
+
+      if (error) { console.log(error); }
+      response.redirect("/menu");
+
+    });
+
+  } else {
+    response.redirect("/menu");
+  }
+
+});
+
 // puerto en el que la aplicacion va a estar escuchando
 app.listen(8080);
