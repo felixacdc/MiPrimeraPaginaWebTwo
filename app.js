@@ -166,7 +166,7 @@ app.post("/menu", function(request, response){
         var data = {
             title: request.body.title,
             description: request.body.description,
-            imageUrl: "burger.png",
+            imageUrl: "data.png",
             pricing: request.body.pricing
         };
 
