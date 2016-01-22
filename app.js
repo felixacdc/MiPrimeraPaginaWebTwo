@@ -106,19 +106,34 @@ app.get("/menu/edit/:id", function(request, response) {
 });
 
 app.put("/menu/:id", function(request, response) {
-    if (request.body.password == app_password) {
-        var data = {
-            title: request.body.title,
-            description: request.body.description,
-            pricing: request.body.pricing
-        };
 
+  if (request.body.password == app_password) {
+      var data = {
+          title: request.body.title,
+          description: request.body.description,
+          pricing: request.body.pricing
+      };
+
+      if (request.file) {
+
+        cloudinary.uploader.upload(request.file.path,
+            function(result) {
+                data.imageUrl = result.url;
+
+                Product.update({"_id": request.params.id}, data, function(product){
+                    response.redirect("/menu");
+                }
+            );
+        });
+      } else {
         Product.update({"_id": request.params.id}, data, function(product){
             response.redirect("/menu");
         });
-    }else {
-        response.redirect("/");
-    }
+      }
+
+  }else {
+      response.redirect("/");
+  }
 });
 
 // ruta para la vista del admin
@@ -157,15 +172,24 @@ app.post("/menu", function(request, response){
 
         var product= new Product(data);
 
-        cloudinary.uploader.upload(request.file.path,
-                                    function(result) {
-                                        product.imageUrl = result.url;
-                                        product.save(function(err){
-                                            console.log(product);
-                                            response.render("index");
-                                        });
-                                    }
-                                );
+        if (request.file) {
+          cloudinary.uploader.upload(request.file.path,
+              function(result) {
+                  product.imageUrl = result.url;
+                  product.save(function(err){
+                      console.log(product);
+                      response.render("/menu");
+                  });
+              }
+          );
+        } else {
+          product.save(function(err){
+              console.log(product);
+              response.render("/menu");
+          });
+        }
+
+
         /*product.save(function(err){
             console.log(product);
             response.render("index");
