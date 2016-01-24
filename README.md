@@ -7,5 +7,6 @@ EL bojetivo de este proyecto es practicar tecnologias como:
 * CSS3
 * HTML5
 
-Videos que no afectar el codigo:
-27.- Mi Primera Pagina Web (NodeJS) - Subir aplicacion 1:2 (Deployment)
+Videos que no afectar el codigo: <br />
+27.- Mi Primera Pagina Web (NodeJS) - Subir aplicacion 1:2 (Deployment) <br />
+28.- Mi Primera Pagina Web (NodeJS) - Subir aplicacion 2:2
